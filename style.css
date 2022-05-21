@@ -1,0 +1,72 @@
+/* ######## TAGs ######## */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+section {
+    position: absolute;
+    width: 50%;
+}
+
+/* ######## IDs ######## */
+
+#word-input {
+    height: 30%;
+    top: 0;
+    left: 0;
+    background: #313131;
+    display: flex;
+    align-items: center;
+}
+
+#word-list {
+    height: 70%;
+    bottom: 0;
+    left: 0;
+    background: #1b1b1b;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+#word-list h7 {
+    background: rgb(48, 155, 204);
+    border-radius: 2px;
+    margin: 5px;
+    padding: 2px;
+    height: fit-content;
+    user-select: none;
+    overflow: auto;
+}
+
+#tree-display {
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: #757575;
+    overflow: auto;
+}
+
+#txt-words {
+    margin: auto;
+    background: none;
+    border: none;
+    font-size: 4rem;
+    color: white;
+    width: 100%;
+    padding: 1rem;
+}
+
+#txt-words:focus {
+    outline: none;
+}
+
