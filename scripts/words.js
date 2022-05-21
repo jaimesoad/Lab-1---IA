@@ -5,7 +5,7 @@ const filterByLetters = (input) => {
     let output = []
 
     data.forEach(word => {
-        if(word.slice(0, len) == input.toUpperCase()) {
+        if(word.slice(0, len) == input.toLowerCase()) {
             output.push(word)
         }
     })
