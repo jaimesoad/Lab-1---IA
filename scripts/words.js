@@ -1,37 +1,18 @@
 "use strict"
 
-const filterByLetters = (input) => {
-    let len    = input.length
-    let output = []
-
-    data.forEach(word => {
-        if(word.slice(0, len) == input.toLowerCase()) {
-            output.push(word)
-        }
-    })
-    return output
-}
-
-function clearWords() {
-    if(listField.childElementCount > 0) {
-        let childs = listField.children
-
-        while(childs.length > 0) {
-            listField.removeChild(childs[0])
-        }
-    }
-}
+// Filtra todas las palabras en el arreglo que comiencen con ciertos caracteres.
+const filterByLetters = input => data.filter(word => word.startsWith(input))
 
 function loadWords() {
 
-    clearWords()
+    listField.innerHTML = ''
     if(inputBox.value == "") return
-    
-    for(let word of filterByLetters(inputBox.value)) {
+
+    filterByLetters(inputBox.value).forEach(word => {
         let child = document.createElement("h7")
         child.setAttribute("id", word)
         child.innerHTML = word
-
+        
         listField.appendChild(child)
-    }
+    })
 }

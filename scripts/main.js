@@ -6,7 +6,7 @@ let wordList  = tree
 
 addEventListener("keydown", (e) => {
     let inputBoxFocused = document.activeElement === inputBox //|| inputBox.value.length <= 1
-    let wordInBounds    = (e.key >= "a" && e.key <= "z" || e.key == "ñ") && inputBox.value.length < 16
+    let wordInBounds    = (e.key >= "a" && e.key <= "z" || spanishSpecial(e.key)) && inputBox.value.length < 16
 
     if(!inputBoxFocused && e.key.length == 1 && wordInBounds) {
 
@@ -28,3 +28,26 @@ addEventListener("keydown", (e) => {
     loadWords()
 })
 
+function spanishSpecial(intput) {
+    switch(intput) {
+        case 'á':
+        break
+        case 'é':
+        break
+        case 'í':
+        break
+        case 'ó':
+        break
+        case 'ú':
+        break
+        case 'ü':
+        break
+        case 'ñ':
+        break
+        
+        default:
+            return false
+    }
+
+    return true
+}
