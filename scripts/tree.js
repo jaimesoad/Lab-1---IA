@@ -4,23 +4,37 @@ class node {
     constructor() {
         this.parent = null
         this.value  = ''
-        this.childs = {}
+        this.childs = []
     }
 }
 
 class tree {
-    #root   = node
-    #leaves = {}
-    #depth  = 1
-    #value  = ''
+    #root  = node
+    #queue = []
+    #depth = 1
+    #value = ''
 
     constructor(value = "") {
-        value = value.toUpperCase()
 
         this.#root       = new node
         this.#root.value = value
         this.#value      = value
+        this.#queue.push(this.#root)
 
+
+    }
+
+    addChilds(letters) {
+        let parent = this.#queue.splice()
+        
+        for(let letter of letters) {
+            let newChild = new node
+
+            newChild.parent = parent
+            newChild.value  = letter
+
+            this.#queue.push(newChild)
+        }
     }
 
     get root() {
@@ -29,8 +43,8 @@ class tree {
     get depth() {
         return this.#depth
     }
-    get leaves() {
-        return this.#leaves
+    get queue() {
+        return this.#queue
     }
     get value() {
         return this.#value

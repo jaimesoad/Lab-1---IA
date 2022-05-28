@@ -4,6 +4,7 @@
 const filterByLetters = input => data.filter(word => word.startsWith(input))
 
 function loadWords() {
+    let letters = []
 
     listField.innerHTML = ''
     if(inputBox.value == "") return
@@ -14,5 +15,15 @@ function loadWords() {
         child.innerHTML = word
         
         listField.appendChild(child)
+
+        // Se añade los hijos a los nodos.
+        for(let i in alfabeto) {
+            console.log(`${inputBox.value}${i}`)
+            if(word.startsWith(`${inputBox.value}${i}`)) {
+                letters.push(i)
+            }
+        }
+
+        wordList.addChilds(letters)
     })
 }

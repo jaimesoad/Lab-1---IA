@@ -4,50 +4,39 @@ let listField = document.getElementById("word-list")
 let inputBox  = document.getElementById("txt-words")
 let wordList  = tree
 
-addEventListener("keydown", (e) => {
-    let inputBoxFocused = document.activeElement === inputBox //|| inputBox.value.length <= 1
-    let wordInBounds    = (e.key >= "a" && e.key <= "z" || spanishSpecial(e.key)) && inputBox.value.length < 16
+const alfabeto = () => {
+    let output = []
 
-    if(!inputBoxFocused && e.key.length == 1 && wordInBounds) {
-
-        if(inputBox.value.length == 1){
-            wordList = new tree(e.key)
-
-        }
-        
-        inputBox.value += e.key
-
-    } else if(e.key.length == 1 && wordInBounds && inputBox.value.length == 0) {
-        wordList = new tree(e.key)
-
-    } else if(e.key == "Backspace" && !inputBoxFocused) {
-        inputBox.value = inputBox.value.slice(0, inputBox.value.length-1)
-
+    for(let i = 0; i <= 25; i++){
+        let letter = String.fromCharCode("a".charCodeAt(0) + i)
+        output.push(letter)
     }
+    output.push("á")
+    output.push("é")
+    output.push("í")
+    output.push("ó")
+    output.push("ú")
+    output.push("ü")
+    output.push("ñ")
 
-    loadWords()
-})
-
-function spanishSpecial(intput) {
-    switch(intput) {
-        case 'á':
-        break
-        case 'é':
-        break
-        case 'í':
-        break
-        case 'ó':
-        break
-        case 'ú':
-        break
-        case 'ü':
-        break
-        case 'ñ':
-        break
-        
-        default:
-            return false
-    }
-
-    return true
+    return output
 }
+
+addEventListener("keyup", () => {
+    let inputBoxFocused = document.activeElement === inputBox
+
+    if(inputBoxFocused) {
+        if(inputBox.value.length == 1) {
+            wordList = new tree(inputBox.value)
+        }
+
+        loadWords()
+    }
+
+    if(inputBox.value.length > 5) {
+        inputBox.style.color = "red"
+
+    } else {
+        inputBox.style.color = ""
+    }
+})
