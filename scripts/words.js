@@ -24,6 +24,6 @@ function loadWords() {
             }
         }
 
-        wordList.addChilds(letters)
+        //wordList.addChilds(letters)
     })
 }

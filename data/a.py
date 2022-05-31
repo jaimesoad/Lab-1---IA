@@ -1,7 +1,7 @@
 import csv
 import json
 
-input = list(csv.reader(open("palabras.csv")))
+input = json.load(open("dict-es5.json"))
 freq  = json.load(open("freq.json"))
 #output = open("data.js", 'w')
 
@@ -26,7 +26,7 @@ def weight(value):
 
 input   = [x for i in input for x in i]
 
-mLetter = [x for x in input if x[0] == "m"]
+mLetter = [x for x in input if x == "m"]
 count   = 0
 
 for i in mLetter:

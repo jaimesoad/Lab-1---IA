@@ -2,7 +2,7 @@
 
 let listField = document.getElementById("word-list")
 let inputBox  = document.getElementById("txt-words")
-let wordList  = tree
+//let wordList  = tree
 
 const alfabeto = () => {
     let output = []
@@ -27,16 +27,21 @@ addEventListener("keyup", () => {
 
     if(inputBoxFocused) {
         if(inputBox.value.length == 1) {
-            wordList = new tree(inputBox.value)
+            //wordList = new Tree()
+            //wordList.GenerateTree()
         }
 
         loadWords()
     }
 
-    if(inputBox.value.length > 5) {
+    if(inputBox.value.length > 5 || (listField.children.length == 0 && inputBox.value.length > 0)) {
         inputBox.style.color = "red"
-
+        console.log("Aqui ando")
+    } else if (data.includes(inputBox.value)) {
+        inputBox.style.color = "green"
     } else {
-        inputBox.style.color = ""
+        inputBox.style.color = "white"
     }
+
+    console.log(`${inputBox.value}: ${datos[inputBox.value]}`)
 })

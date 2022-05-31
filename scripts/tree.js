@@ -1,53 +1,51 @@
 "use strict"
 
-class node {
-    constructor() {
-        this.parent = null
-        this.value  = ''
+class Node {
+    constructor(parent = null, data = '', level = 1) {
+        this.parent = parent
+        this.data   = data
         this.childs = []
+        this.level = level
+    }
+
+    // Función de Recursividad
+    addChilds() {
+
+        // Caso Base
+        if ( this.level == 5 ) {return}
+
+        // Caso Recursivo
+        let childsLevel = this.level + 1
+        let childsParent = this
+        
+        let childsData = []
+        for (let index = 0; index < data.length; index++) {
+
+            let child;
+            if (len(data[index]) >= childsLevel) {
+                
+                let childData = data[index].slice(0, childsLevel)
+
+                if ( !childsData.includes(childData) ) {
+                    childsData.push(childData)
+                    child = new Node(this, childData, childsLevel)
+                    this.childs.push( child )
+                }
+            }
+        }
+
+        this.childs.forEach(child => { child.addChilds() });
     }
 }
 
-class tree {
-    #root  = node
-    #queue = []
-    #depth = 1
-    #value = ''
+class Tree {
 
-    constructor(value = "") {
-
-        this.#root       = new node
-        this.#root.value = value
-        this.#value      = value
-        this.#queue.push(this.#root)
-
-
+    constructor() {
+        this.raiz = new Node(null, "s", 1)
     }
 
-    addChilds(letters) {
-        let parent = this.#queue.splice()
-        
-        for(let letter of letters) {
-            let newChild = new node
-
-            newChild.parent = parent
-            newChild.value  = letter
-
-            this.#queue.push(newChild)
-        }
-    }
-
-    get root() {
-        return this.#root
-    }
-    get depth() {
-        return this.#depth
-    }
-    get queue() {
-        return this.#queue
-    }
-    get value() {
-        return this.#value
+    GenerateTree() {
+        this.raiz.addChilds()
     }
 }
 
