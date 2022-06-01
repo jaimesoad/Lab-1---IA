@@ -1,5 +1,7 @@
 "use strict"
 
+var data = Object.keys(datos)
+
 // Filtra todas las palabras en el arreglo que comiencen con ciertos caracteres.
 const filterByLetters = input => data.filter(word => word.startsWith(input))
 
