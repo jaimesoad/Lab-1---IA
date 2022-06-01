@@ -22,14 +22,14 @@ class Node {
         this.data   = data
         this.childs = []
         this.level = level
-        this.vis = {id: data, label: data}
+        this.vis = {id: cyrb53(data, 0), label: data, group: this.level}
     }
 
     // Función de Recursividad
     addChilds() {
 
         // Caso Base
-        if ( this.data.length == 5 ) {return this.id}
+        if ( this.data.length == 5 ) {return}
 
         // Caso Recursivo
         let childsLevel = this.level + 1
@@ -37,9 +37,15 @@ class Node {
         
         for (let index = 0; index < data.length; index++) {
 
-            if (data[index].length > this.data.length && data[index].slice(0, this.data.length) == this.data) {
+            if (data[index].length >= ( this.data.length + 1 ) && data[index].slice(0, this.data.length) == this.data) {
                 
-                let childData = data[index].slice(0, this.data.length + 1) 
+                let childData;
+                if ( this.data.length == data[index].length) {
+                    childData = data[index].slice(0, this.data.length) 
+                } else {
+                    childData = data[index].slice(0, this.data.length + 1) 
+                }
+
 
                 if ( !Data_Vista.includes(childData) ) {
 
@@ -48,7 +54,7 @@ class Node {
                     this.childs.push( child )
 
                 }
-            }
+            } 
         }
 
         this.childs.forEach(child => {
@@ -142,17 +148,47 @@ class Tree {
         nodes: nodes,
         edges: edges
     };
-    
-    // var options = {
-    //     layout: {
-    //       randomSeed: undefined,
-    //       improvedLayout: false
-    //     }
-    //   }
-
-    var options = {}
 
     // initialize your network!
+    // var network = new vis.Network(container, data, options);
+
+    const options = {
+        "nodes": {
+          "borderWidth": null,
+          "borderWidthSelected": null,
+          "opacity": null,
+          "font": {
+            "strokeWidth": 2
+          },
+          "physics": false,
+          "size": null
+        },
+        "edges": {
+          "selfReferenceSize": null,
+          "selfReference": {
+            "angle": 0.7853981633974483
+          },
+          "smooth": false
+        },
+        "layout": {
+          "hierarchical": {
+            "enabled": true,
+            "levelSeparation": 400,
+            "nodeSpacing": 20,
+            "direction": "LR",
+            "sortMethod": "directed"
+          }
+        },
+        "interaction": {
+          "dragNodes": true
+        },
+        "physics": {
+          "enabled": false
+        }
+      }
+
     var network = new vis.Network(container, data, options);
+
+    network.setOptions(options);
     }
 }
