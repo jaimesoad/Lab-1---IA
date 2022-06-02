@@ -18,6 +18,7 @@ class Node {
 
     constructor(parent = null, data = '', level = 1) {
         this.id = cyrb53(data, 0)
+        this.frec = datos[data] || 0
         this.parent = parent
         this.data   = data
         this.childs = []
@@ -29,7 +30,10 @@ class Node {
     addChilds() {
 
         // Caso Base
-        if ( this.data.length == 5 ) {return}
+        if ( this.data.length == 5 ) {
+            console.log(this.frec)
+            return
+        }
 
         // Caso Recursivo
         let childsLevel = this.level + 1
@@ -52,7 +56,6 @@ class Node {
                     Data_Vista.push(childData)
                     let child = new Node(this, childData, childsLevel)
                     this.childs.push( child )
-
                 }
             } 
         }
@@ -64,21 +67,10 @@ class Node {
     }
 
     Data_Pre_Orden(Dataset) {
-        // console.log("Estoy en el nodo: ")
-        // console.log(this.vis)
-        // console.log("El dataset es:")
-        // console.log(Dataset)
-        // console.log("_                     _")
 
-        // for (let index = 0; index < this.childs; index++) {
-        //     console.log("Hijo Nº" + (index + 1))
-        //     console.log(this.childs[index].vis)
-        // }
-
-        Dataset.push({id: this.id, label: this.data})
+        Dataset.push(this.vis)
         if (this.childs.length >= 1) {
             this.childs.forEach(child => {
-                // console.log(child.vis)
                 Dataset = child.Data_Pre_Orden(Dataset)
             })
         }
@@ -89,7 +81,7 @@ class Node {
         if (this.childs.length >= 1) {
 
             this.childs.forEach(child => {
-                Dataset.push({from: this.id, to: child.id})
+                Dataset.push({from: this.id, to: child.id, label: String.toString(this.frec)})
             })
 
             this.childs.forEach(child => {
@@ -113,22 +105,6 @@ class Tree {
     }
 
     RenderTree() {
-        // create an array with nodes
-    // var nodes = new vis.DataSet([
-    //     {id: 1, label: 'Node 1'},
-    //     {id: 2, label: 'Node 2'},
-    //     {id: 3, label: 'Node 3'},
-    //     {id: 4, label: 'Node 4'},
-    //     {id: 5, label: 'Node 5'}
-    // ]);
-
-    // create an array with edges
-    // var edges = new vis.DataSet([
-    //     {from: 1, to: 3},
-    //     {from: 1, to: 2},
-    //     {from: 2, to: 4},
-    //     {from: 2, to: 5}
-    // ]);
 
     let DataSet = []
     var NodesData = this.raiz.Data_Pre_Orden(DataSet)
@@ -153,37 +129,133 @@ class Tree {
     // var network = new vis.Network(container, data, options);
 
     const options = {
-        "nodes": {
-          "borderWidth": null,
-          "borderWidthSelected": null,
-          "opacity": null,
-          "font": {
-            "strokeWidth": 2
+        nodes:{
+            borderWidth: 1,
+            borderWidthSelected: 2,
+            brokenImage:undefined,
+            chosen: true,
+            color: {
+              border: '#696969',
+              background: '#FFFFFF',
+              highlight: {
+                border: '#0000DD',
+                background: '#fefefe'
+              },
+              hover: {
+                border: '#0000DD',
+                background: '#fefefe'
+              }
+            },
+            opacity: 1,
+            fixed: {
+              x:false,
+              y:false
+            },
+            font: {
+              color: '#000000',
+              size: 16, // px
+              face: 'arial',
+              background: 'none',
+              strokeWidth: 2, // px
+              strokeColor: '#00000',
+              align: 'center',
+              multi: false,
+              vadjust: 0,
+              bold: {
+                color: '#343434',
+                size: 14, // px
+                face: 'arial',
+                vadjust: 0,
+                mod: 'bold'
+              }
+            },
+            // group: undefined,
+            heightConstraint: false,
+            hidden: false,
+            icon: {
+              face: 'FontAwesome',
+            //   code: undefined,
+            //   weight: undefined,
+              size: 50,  //50,
+              color:'#2B7CE9'
+            },
+            // image: undefined,
+            // imagePadding: {
+            //   left: 0,
+            //   top: 0,
+            //   bottom: 0,
+            //   right: 0
+            // },
+            // label: undefined,
+            labelHighlightBold: true,
+            // level: undefined,
+            mass: 1,
+            physics: true,
+            scaling: {
+              min: 10,
+              max: 30,
+              label: {
+                enabled: false,
+                min: 14,
+                max: 30,
+                maxVisible: 30,
+                drawThreshold: 5
+              },
+              customScalingFunction: function (min,max,total,value) {
+                if (max === min) {
+                  return 0.5;
+                }
+                else {
+                  let scale = 1 / (max - min);
+                  return Math.max(0,(value - min)*scale);
+                }
+              }
+            },
+            shadow:{
+              enabled: false,
+              color: 'rgba(0,0,0,0.5)',
+              size:10,
+              x:5,
+              y:5
+            },
+            shape: 'ellipse',
+            shapeProperties: {
+              borderDashes: false, // only for borders
+              borderRadius: 6,     // only for box shape
+              interpolation: false,  // only for image and circularImage shapes
+              useImageSize: false,  // only for image and circularImage shapes
+              useBorderWithImage: false,  // only for image shape
+              coordinateOrigin: 'center'  // only for image and circularImage shapes
+            },
+            size: 25,
+            // title: undefined,
+            // value: undefined,
+            widthConstraint: false,
+            // x: undefined,
+            // y: undefined
           },
-          "physics": false,
-          "size": null
-        },
-        "edges": {
-          "selfReferenceSize": null,
-          "selfReference": {
-            "angle": 0.7853981633974483
+        edges: {
+          width: 2,
+        //   selfReferenceSize: null,
+          selfReference: {
+            angle: 0.7853981633974483
           },
-          "smooth": false
+          smooth: false
         },
-        "layout": {
-          "hierarchical": {
-            "enabled": true,
-            "levelSeparation": 400,
-            "nodeSpacing": 20,
-            "direction": "LR",
-            "sortMethod": "directed"
+        layout: {
+          hierarchical: {
+            enabled: true,
+            levelSeparation: 400,
+            nodeSpacing: 20,
+            direction: "LR",
+            sortMethod: "directed"
           }
         },
-        "interaction": {
-          "dragNodes": true
+        interaction: {
+          dragNodes: true
         },
-        "physics": {
-          "enabled": false
+        physics: {
+          enabled: false
         }
       }
 
