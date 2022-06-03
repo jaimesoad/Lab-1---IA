@@ -2,6 +2,8 @@
 
 let listField = document.getElementById("word-list")
 let inputBox  = document.getElementById("txt-words")
+const data    = Object.keys(datos)
+const frec    = datos
 let wordList;
 
 const alfabeto = () => {
@@ -23,7 +25,7 @@ const alfabeto = () => {
 }
 
 addEventListener("keyup", () => {
-    let inputBoxFocused = document.activeElement === inputBox
+    // let inputBoxFocused = document.activeElement === inputBox
 
     Data_Vista = []
 
@@ -31,11 +33,10 @@ addEventListener("keyup", () => {
     wordList.CreateTree()
     wordList.RenderTree()
 
-    loadWords()
+    buscarProfundidad ( wordList )
 
     if(inputBox.value.length > 5 || (listField.children.length == 0 && inputBox.value.length > 0)) {
         inputBox.style.color = "red"
-        console.log("Aqui ando")
     } else if (data.includes(inputBox.value)) {
         inputBox.style.color = "green"
 
@@ -45,8 +46,8 @@ addEventListener("keyup", () => {
         wordList.CreateTree()
         wordList.RenderTree()
 
-        loadWords()
-
+        buscarProfundidad ( wordList )
+    
     } else {
         inputBox.style.color = "white"
 
@@ -56,8 +57,7 @@ addEventListener("keyup", () => {
         wordList.CreateTree()
         wordList.RenderTree()
 
-        loadWords()
-
+        buscarProfundidad ( wordList )
     }
 
     console.log(`${inputBox.value}: ${datos[inputBox.value]}`)

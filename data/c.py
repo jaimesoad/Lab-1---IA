@@ -15,6 +15,7 @@ for i in words:
 
     final.append(fila)
 
+    #if fila[1] == 
     # if count == 100:
     #     break
     # count += 1
@@ -26,27 +27,34 @@ for word in final:
 
 dict = json.load(open("dict-es5.json"))
 
+archivo = open("frecuencias_ciega.json", 'w')
+archivo.write("[\n")
 
-archivo = open("frecuencias.json", 'w')
-archivo.write("{\n")
-
+ordenado = []
 for Sword in dict:
 
     try:
         print(soloPalabras.index(Sword))
-        numero = float(final[soloPalabras.index(Sword)][2].replace(",", ""))
-        print(f"['{Sword}', '{round(numero/2_022_513, 10):.10f}']")
-        archivo.write(f"\t\"{Sword}\": {round(numero/2_022_513, 10):.10f},\n")
+        numero = float(final[soloPalabras.index(Sword)][3].replace(",", ""))
+        print(f"['{Sword}', '{round(numero)}']")
+        #archivo.write(f"{round(numero)},\n")
+        ordenado.append(numero)
     
     except:
         print(Sword)
-        archivo.write(f"\t\"{Sword}\": {0},\n")
+        ordenado.append(0)
+        #archivo.write(f"{0},\n")
 
+ordenado.sort(reverse=True)
+
+for i in ordenado:
+    archivo.write(f"\t{i},\n")
 
 """ for word in dict:
         try:
             final.indexOf(word)
         except:
-            archivo.write(f"\t\"{word}\": {0},\n") """
+            #archivo.write(f"\t\"{word}\": {0},\n")
+            ordenado.append(0) """
 
-archivo.write("}")
+archivo.write("]")

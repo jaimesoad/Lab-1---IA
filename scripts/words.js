@@ -1,9 +1,17 @@
 "use strict"
 
-var data = Object.keys(datos)
-
 // Filtra todas las palabras en el arreglo que comiencen con ciertos caracteres.
 const filterByLetters = input => data.filter(word => word.startsWith(input))
+
+function recommend(word) {
+    listfields.innerHTML = ''
+    let child = document.createElement("h7")
+    child.setAttribute("id", word)
+    child.innerHTML = word
+
+    listField.appendChild(child)
+    console.log("Aquí ando")
+}
 
 function loadWords() {
     let letters = []
