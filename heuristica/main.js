@@ -53,7 +53,7 @@ addEventListener("keyup", () => {
 
         Data_Vista = []
 
-        wordList = new Tree(inputBox.value)
+        wordList = new Tree(inputBox.value, true)
         wordList.CreateTree()
         wordList.RenderTree()
 

@@ -4,13 +4,15 @@
 const filterByLetters = input => data.filter(word => word.startsWith(input))
 
 function recommend(word) {
-    listfields.innerHTML = ''
-    let child = document.createElement("h7")
+    // listField.innerHTML = ''
+    let LI = document.createElement("li")
+    let child = document.createElement("a")
     child.setAttribute("id", word)
+    child.setAttribute("href", `https://dle.rae.es/${word}?m=form`)
     child.innerHTML = word
-
-    listField.appendChild(child)
-    console.log("Aquí ando")
+  
+    LI.appendChild(child)
+    OL.appendChild(LI)
 }
 
 function loadWords() {

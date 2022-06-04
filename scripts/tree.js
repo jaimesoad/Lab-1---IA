@@ -17,13 +17,16 @@ var Data_Vista = []
 
 class Node {
 
-    constructor(data = '', level = 1, G = 1) {
+    constructor(data = '', level = 1, G = 1, Mode) {
         this.id = cyrb53(data, 0)
+
         this.frec = frec[data] || 0
         this.str_frec = (frec[data] || 1).toString()
+        
         this.data = data
         this.childs = []
         this.level = level
+
         this.vis = {
             id: cyrb53(data, 0),
             label: data,
@@ -32,6 +35,8 @@ class Node {
 
         this.G_n = G
         this.H_n = this.frec || 0
+
+        this.mode = Mode
     }
 
     // Función de Recursividad
@@ -61,7 +66,7 @@ class Node {
                 if (!Data_Vista.includes(childData)) {
 
                     Data_Vista.push(childData)
-                    let child = new Node(childData, childsLevel, this.G_n + 1)
+                    let child = new Node(childData, childsLevel, this.G_n + 1, this.mode)
                     this.childs.push(child)
                 }
             }
@@ -88,13 +93,23 @@ class Node {
 
         if (this.childs.length >= 1) {
 
-            this.childs.forEach(child => {
-                Dataset.push({
-                    from: this.id,
-                    to: child.id,
-                    label: this.str_frec
+            if (this.Mode) {
+                this.childs.forEach(child => {
+                    Dataset.push({
+                        from: this.id,
+                        to: child.id,
+                        label: this.str_frec
+                    })
                 })
-            })
+            } else {
+                this.childs.forEach(child => {
+                    Dataset.push({
+                        from: this.id,
+                        to: child.id
+                    })
+                })
+            }
+            
 
             this.childs.forEach(child => {
                 Dataset = child.Edges_Pre_Orden(Dataset)
@@ -106,10 +121,16 @@ class Node {
 
 }
 
+var nodes;
+var edges;
+var DATA;
+var network;
+
 class Tree {
 
-    constructor(Inicio) {
-        this.raiz = new Node(Inicio, 1)
+    constructor(Inicio, Mode) {
+        this.raiz = new Node(Inicio, 1, 1, Mode)
+        this.network;
     }
 
     CreateTree() {
@@ -121,18 +142,18 @@ class Tree {
         let DataSet = []
         var NodesData = this.raiz.Data_Pre_Orden(DataSet)
 
-        var nodes = new vis.DataSet(NodesData)
+        nodes = new vis.DataSet(NodesData)
 
         DataSet = []
         var EdgesData = this.raiz.Edges_Pre_Orden(DataSet)
 
-        var edges = new vis.DataSet(EdgesData)
+        edges = new vis.DataSet(EdgesData)
 
         // create a network
         var container = document.getElementById('mynetwork');
 
         // provide the data in the vis format
-        var data = {
+        DATA = {
             nodes: nodes,
             edges: edges
         };
@@ -181,7 +202,6 @@ class Tree {
                         mod: 'bold'
                     }
                 },
-                // group: undefined,
                 heightConstraint: false,
                 hidden: false,
                 icon: {
@@ -238,16 +258,11 @@ class Tree {
                     useBorderWithImage: false, // only for image shape
                     coordinateOrigin: 'center' // only for image and circularImage shapes
                 },
-                size: 25,
-                // title: undefined,
-                // value: undefined,
+                size: 45,
                 widthConstraint: false,
-                // x: undefined,
-                // y: undefined
             },
             edges: {
                 width: 2,
-                //   selfReferenceSize: null,
                 selfReference: {
                     angle: 0.7853981633974483
                 },
@@ -257,20 +272,30 @@ class Tree {
                 hierarchical: {
                     enabled: true,
                     levelSeparation: 400,
-                    nodeSpacing: 100,
+                    nodeSpacing: 45,
                     direction: "LR",
                     sortMethod: "directed"
                 }
             },
             interaction: {
-                dragNodes: true
+                dragNodes: false
             },
             physics: {
                 enabled: false
+            },
+            groups: {
+                meta: {
+                    color: {background: "goldenrod", border: "black"},
+                    shape: "box",
+                    font: {
+                        size: 16,
+                        color: "white"
+                    },
+                },
             }
         }
 
-        var network = new vis.Network(container, data, options);
+        network = new vis.Network(container, DATA, options);
 
         network.setOptions(options);
     }

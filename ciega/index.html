@@ -9,8 +9,7 @@
     <link rel="shortcut icon" href="#" type="image/x-icon">
     <link rel="stylesheet" href="../style.css">
 
-    <!-- <script src="data/dict-es5.js"></script> -->
-    <script src="../data/frecuencias.js"></script>
+    <script src="../data/frecuencias_ciega.js"></script>
     <script src="../scripts/tree.js"></script>
     <script src="../scripts/words.js"></script>
 
@@ -22,12 +21,14 @@
 
     <section id="word-input">
         <a href="../" id="atras"><i class="fa-solid fa-arrow-left fa-2x"></i></i></a>
-        <input type="text" name="txtWords" id="txt-words" maxlength="16" placeholder="Escribe">
+        <input type="text" name="txtWords" id="txt-words" placeholder="Escribe" value="s">
     
     </section>
 
     <section id="word-list">
-
+        <ol id="ol">
+            
+        </ol>
     </section>
 
     <section id="tree-display"></section>
@@ -35,6 +36,6 @@
 
         </div>
     <script src="../scripts/ciega.js"></script>
-    <script src="../scripts/main.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
