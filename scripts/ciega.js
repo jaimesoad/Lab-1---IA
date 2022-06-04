@@ -13,7 +13,7 @@
 // }
 
 function llamarProfundidad (arbol = Tree) {
-    let limit = 60
+    let limit = 50
     let sum = 0
     for (let index = 0; index < blind_words.length; index++) {
         let count = buscarProfundidad(arbol, blind_words[index])
