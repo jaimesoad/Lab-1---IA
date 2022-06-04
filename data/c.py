@@ -6,6 +6,7 @@ words = csv.reader(open("CREA_total.csv"), delimiter="\t")
 final = []
 count = 0
 soloPalabras = []
+soloNumeros  = {}
 for i in words:
 
     fila = []
@@ -23,38 +24,33 @@ for i in words:
 for word in final:
     if word[1][0] == 's' and len(word[1]) <= 5:
         soloPalabras.append(word[1])
-        print(word[1])
+        if float(word[3]) > 0:
+            soloNumeros[word[3]] = word[1]
+
+            print(f"{word[3]}: {soloNumeros[word[3]]}")
+            print(word[1] in soloNumeros.values())
+
+        #print(word[1], word[3])
 
 dict = json.load(open("dict-es5.json"))
 
 archivo = open("frecuencias_ciega.json", 'w')
-archivo.write("[\n")
 
 ordenado = []
-for Sword in dict:
 
-    try:
-        print(soloPalabras.index(Sword))
-        numero = float(final[soloPalabras.index(Sword)][3].replace(",", ""))
-        print(f"['{Sword}', '{round(numero)}']")
-        #archivo.write(f"{round(numero)},\n")
-        ordenado.append(numero)
-    
-    except:
-        print(Sword)
-        ordenado.append(0)
-        #archivo.write(f"{0},\n")
+for word in soloNumeros.values():
+    if word in dict:
+        ordenado.append(word)
+        pass
+    pass
 
-ordenado.sort(reverse=True)
+for word in dict:
+    if word not in soloNumeros.values():
+        ordenado.append(word)
+
+archivo.write("[\n")
 
 for i in ordenado:
-    archivo.write(f"\t{i},\n")
-
-""" for word in dict:
-        try:
-            final.indexOf(word)
-        except:
-            #archivo.write(f"\t\"{word}\": {0},\n")
-            ordenado.append(0) """
+    archivo.write(f"\t\"{i}\",\n")
 
 archivo.write("]")
