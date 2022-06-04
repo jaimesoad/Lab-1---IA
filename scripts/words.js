@@ -9,6 +9,7 @@ function recommend(word) {
     let child = document.createElement("a")
     child.setAttribute("id", word)
     child.setAttribute("href", `https://dle.rae.es/${word}?m=form`)
+    child.setAttribute("target", "_blank")
     child.innerHTML = word
   
     LI.appendChild(child)
