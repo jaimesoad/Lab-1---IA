@@ -1,15 +1,22 @@
 "use strict"
 
-let listField = document.getElementById("word-list")
-let inputBox  = document.getElementById("txt-words")
-const data    = Object.keys(datos)
-const frec    = datos
+let OL = document.getElementById("ol")
+let inputBox = document.getElementById("txt-words")
+
+const data = Object.keys( A_words )
+const frec = data
+
 let wordList;
+
+wordList = new Tree(inputBox.value, true)
+wordList.CreateTree()
+wordList.RenderTree()
+llamar_A_estrella( wordList.raiz )
 
 const alfabeto = () => {
     let output = []
 
-    for(let i = 0; i <= 25; i++){
+    for (let i = 0; i <= 25; i++) {
         let letter = String.fromCharCode("a".charCodeAt(0) + i)
         output.push(letter)
     }
@@ -24,41 +31,72 @@ const alfabeto = () => {
     return output
 }
 
-addEventListener("keyup", () => {
-    // let inputBoxFocused = document.activeElement === inputBox
+let num_palabras = 0
 
-    Data_Vista = []
+function New_Palabra(palabra) {
 
-    wordList = new Tree(inputBox.value)
-    wordList.CreateTree()
-    wordList.RenderTree()
+    let color;
 
-    buscarProfundidad ( wordList )
+    OL.innerHTML = ""
 
-    if(inputBox.value.length > 5 || (listField.children.length == 0 && inputBox.value.length > 0)) {
-        inputBox.style.color = "red"
-    } else if (data.includes(inputBox.value)) {
-        inputBox.style.color = "green"
+    if (palabra.length > 5) {
+        color = "red"
+    } else if ( data.includes(palabra)) {
+        color = "green"
 
         Data_Vista = []
 
-        wordList = new Tree(inputBox.value)
+        wordList = new Tree(palabra, true)
         wordList.CreateTree()
         wordList.RenderTree()
 
-        buscarProfundidad ( wordList )
-    
+        llamar_A_estrella( wordList.raiz )
+
+        if (OL.children.length == 0 && palabra.length > 0) {
+            color = "red"
+        }
+
     } else {
-        inputBox.style.color = "white"
+        color = "white"
 
         Data_Vista = []
 
-        wordList = new Tree(inputBox.value, true)
+        wordList = new Tree(palabra, true)
         wordList.CreateTree()
         wordList.RenderTree()
 
-        buscarProfundidad ( wordList )
+        llamar_A_estrella( wordList.raiz )
+
+        if (OL.children.length == 0 && palabra.length > 0) {
+            color = "red"
+        }
+    }
+    return color
+}
+
+addEventListener("keyup", (key) => {
+
+    let palabras = inputBox.value.trim().split(" ")
+    let color_a_pintar = "green";
+
+    if (inputBox.value.length == 0 && key.key == "Backspace") {
+        inputBox.value = "s"
+        return
+    } else if (key.key == " ") {
+
+        let ultimo = palabras.length - 1
+
+        if ( !data.includes(palabras[ultimo]) ) {
+            inputBox.value = palabras.join(" ")
+
+            color_a_pintar = "red"
+
+        } else {
+            color_a_pintar = "white"
+        }
+    } else {
+        color_a_pintar = New_Palabra(palabras[palabras.length - 1])
     }
 
-    console.log(`${inputBox.value}: ${datos[inputBox.value]}`)
+    inputBox.style.color = color_a_pintar
 })

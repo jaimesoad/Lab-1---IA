@@ -17,11 +17,12 @@ var Data_Vista = []
 
 class Node {
 
-    constructor(data = '', level = 1, G = 1, Mode) {
+    constructor(data = '', level = 1, Mode) {
         this.id = cyrb53(data, 0)
+        this.parent = null
 
         this.frec = frec[data] || 0
-        this.str_frec = (frec[data] || 1).toString()
+        this.str_frec = (frec[data] || 0).toString()
         
         this.data = data
         this.childs = []
@@ -33,10 +34,12 @@ class Node {
             group: this.level
         }
 
-        this.G_n = G
-        this.H_n = this.frec || 0
+        this.G = 0
+        this.H = 0
+        this.F = this.G + this.H
 
         this.mode = Mode
+        this.revisado = false
     }
 
     // Función de Recursividad
@@ -66,7 +69,7 @@ class Node {
                 if (!Data_Vista.includes(childData)) {
 
                     Data_Vista.push(childData)
-                    let child = new Node(childData, childsLevel, this.G_n + 1, this.mode)
+                    let child = new Node(childData, childsLevel, this.mode)
                     this.childs.push(child)
                 }
             }
@@ -98,7 +101,7 @@ class Node {
                     Dataset.push({
                         from: this.id,
                         to: child.id,
-                        label: this.str_frec
+                        label: child.str_frec
                     })
                 })
             } else {
@@ -129,7 +132,7 @@ var network;
 class Tree {
 
     constructor(Inicio, Mode) {
-        this.raiz = new Node(Inicio, 1, 1, Mode)
+        this.raiz = new Node(Inicio, 1, Mode)
         this.network;
     }
 

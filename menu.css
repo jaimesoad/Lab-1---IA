@@ -63,3 +63,20 @@ body {
         background: #444444;
     }
 }
+
+@media only Screen and (max-width: 720px) {
+    #principal {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        height: 87%;
+        justify-content: space-evenly;
+        }
+
+    #principal h1 {
+        font-size: 1.5rem;
+    }
+
+    .boton {
+    }
+}
