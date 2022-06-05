@@ -21,8 +21,8 @@ class Node {
         this.id = cyrb53(data, 0)
         this.parent = null
 
-        this.frec = frec[data] || 0
-        this.str_frec = (frec[data] || 0).toString()
+        this.frec = A_words[data] 
+        this.str_frec = ( A_words[data] || 0).toString()
         
         this.data = data
         this.childs = []
@@ -96,7 +96,7 @@ class Node {
 
         if (this.childs.length >= 1) {
 
-            if (this.Mode) {
+            if (this.mode) {
                 this.childs.forEach(child => {
                     Dataset.push({
                         from: this.id,

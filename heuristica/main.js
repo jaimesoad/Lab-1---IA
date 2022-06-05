@@ -41,7 +41,7 @@ function New_Palabra(palabra) {
 
     if (palabra.length > 5) {
         color = "red"
-    } else if ( data.includes(palabra)) {
+    } else if ( blind_words.includes(palabra)) {
         color = "green"
 
         Data_Vista = []
@@ -77,7 +77,7 @@ function New_Palabra(palabra) {
 addEventListener("keyup", (key) => {
 
     let palabras = inputBox.value.trim().split(" ")
-    let color_a_pintar = "green";
+    let color_a_pintar = "black";
 
     if (inputBox.value.length == 0 && key.key == "Backspace") {
         inputBox.value = "s"

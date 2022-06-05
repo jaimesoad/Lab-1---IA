@@ -12,7 +12,7 @@ wordList = new Tree(inputBox.value, false)
 wordList.CreateTree()
 wordList.RenderTree()
 
-buscarProfundidad(wordList)
+buscarProfundidad( wordList )
 
 const alfabeto = () => {
     let output = []
@@ -51,7 +51,7 @@ function New_Palabra(palabra) {
         wordList.CreateTree()
         wordList.RenderTree()
 
-        buscarProfundidad(wordList)
+        buscarProfundidad( wordList )
 
         if (OL.children.length == 0 && palabra.length > 0) {
             color = "red"
@@ -66,7 +66,7 @@ function New_Palabra(palabra) {
         wordList.CreateTree()
         wordList.RenderTree()
 
-        buscarProfundidad(wordList)
+        buscarProfundidad( wordList )
 
         if (OL.children.length == 0 && palabra.length > 0) {
             color = "red"
