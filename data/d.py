@@ -1,13 +1,13 @@
 import csv
 import json
 
-dct   = json.load(open("dict-es5.json"))
+dct = json.load(open("dict-es5.json"))
 words = csv.reader(open("CREA_total.csv"), delimiter="\t")
-archivo = json.load(open("frecuencias-a-estrella.json", 'w'))
+archivo = open("frecuencias-a-estrella.json", 'w')
 final = []
 count = 0
 soloPalabras = []
-soloNumeros  = {}
+soloNumeros = {}
 
 for i in words:
 
@@ -15,26 +15,28 @@ for i in words:
     for j in i:
         fila.append(j.strip())
 
-    #final.append(fila)
+    final.append(fila)
 
-mayor = int
+# print(final)
+
+mayor = 0
 
 for word in final:
     if word[1][0] == 's' and len(word[1]) <= 5:
-        mayor = word[3]
+        mayor = float(word[3])
         break
 
 # https://github.com/JorgeDuenasLerin/diccionario-espanol-txt
-#print(final)
+# print(final)
 
 for word in final:
-    if word[1][0] == 's' and len(word[1]) <= 5:
+    if word[1][0] == 's' and len(word[1]) <= 5 and word[1] in dct:
         soloPalabras.append(word[1])
-        
-        soloNumeros[word[1]] = mayor - word[3]
 
-        print(f"{word[1]}: {soloNumeros[word[1]]}")
-        print(word[3] in soloNumeros.values())
+        soloNumeros[word[1]] = mayor - float(word[3])
+
+        # print(f"{word[1]}: {soloNumeros[word[1]]}")
+        # print(word[3] in soloNumeros.values())
 
 """ ordenado = []
 
@@ -47,34 +49,46 @@ for word in soloNumeros.keys():
 
 for word in dct:
     if word not in soloNumeros.keys():
-        soloNumeros[word] = mayor
+        soloNumeros[word] = 0
 
 cinco_letras = [x for x in soloNumeros.keys() if len(x) == 5]
 
-def Promedio( Padres, Numeros):
+# print(soloNumeros)
 
-  Hijos = []
+def Promedio(Padres):
 
-  for word in Padres:
-    newword = word.slice(0, len(word) - 1, 1)
-    if newword not in Hijos:
+    Hijos = []
 
-      suma = 0
-      count = 0
+    for word in Padres:
+        corte = slice(0, len(word) - 1)
+        newword = word[corte]
 
-      for palabra in Padres:
-        if newword in palabra:
-          suma += Numeros[palabra]
-          count += 1
+        if newword not in Hijos:
 
-      promedio = suma / count
+            suma = 0
+            count = 0
 
-      Hijos.append(newword)
-      Numeros[newword] = promedio
+            for palabra in Padres:
+                if newword in palabra:
+                    suma = suma + soloNumeros[palabra]
+                    count = count + 1
 
-  return Hijos
+            promedio = suma / count
 
-cuatro_letras = Promedio(cinco_letras, soloNumeros)
-tres_letras = Promedio(cuatro_letras, soloNumeros)
-dos_letras = Promedio(tres_letras, soloNumeros)
-una_letra = Promedio(dos_letras, soloNumeros)
+            Hijos.append(newword)
+            soloNumeros[newword] = promedio
+
+    return Hijos
+
+
+cuatro_letras = Promedio(cinco_letras)
+tres_letras = Promedio(cuatro_letras)
+dos_letras = Promedio(tres_letras)
+una_letra = Promedio(dos_letras)
+
+archivo.write("{\n")
+
+for i in soloNumeros.keys():
+    archivo.write(f"\t\"{i}\": {soloNumeros[i]},\n")
+
+archivo.write("}")
