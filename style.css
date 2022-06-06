@@ -32,11 +32,10 @@ body {
     grid-row: 2;
 
     background: #1b1b1b;
-    overflow-y: none;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-content: flex-start;
+    align-content: flex-start; */
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-size: 14pt;
@@ -60,15 +59,17 @@ body {
     width: 100%;
     color: #f5f5f5;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
-    overflow-y: none;
+    flex-wrap: wrap;
+    overflow: auto;
     margin-top: 0;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #word-list ol li {
-    margin: 0;
-    padding: 5px;
+    margin-right: 30px;
+    padding: 15px;
 }
 
 #tree-display {
