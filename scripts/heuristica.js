@@ -58,7 +58,6 @@ function llamar_A_estrella( raiz ) {
 }
 
 function busqueda_A_estrella( raiz ) {
-
   // Declarar e inicializar listas abierta y cerrada
   lista_cerrada = []
   lista_abierta = []
@@ -69,39 +68,28 @@ function busqueda_A_estrella( raiz ) {
   let Nodo_Final_En_Lista_Cerrada;
   let Iteraciones = 0
   // Mientras la lista abierta no esté vacía
-
   do {
-
     Iteraciones += 1
-
     // Sacar nodo con f(n) más bajo
     nodo = lista_cerrada[ lista_cerrada.length - 1 ]
-
-    // Si el nodo es solución, retornar el nodo
-    // Si el nodo es fin de rama o su frecuencia es menor a la de sus hijos
 
     let hijos_no_revisados = revisar_hijos( nodo )
 
     hijos_no_revisados.forEach(hijo => {
       if ( !lista_cerrada.includes(hijo) ) {
         lista_vecinos.push(hijo)
-      }
-    })
+      }})
 
     lista_vecinos.forEach(hijo => {
       hijo.G = nodo.G + 1
       hijo.H = A_words[hijo.data]
       hijo.F = hijo.G + hijo.H
-      hijo.parent = nodo
-    })
+      hijo.parent = nodo})
 
     lista_vecinos.forEach(vecino => {
-
       if ( !lista_abierta.includes(vecino) && !lista_cerrada.includes(vecino)) {
         lista_abierta.push(vecino)
-      } 
-
-    })
+      } })
 
     if ( lista_abierta.length > 0 ) {
       Fin = false

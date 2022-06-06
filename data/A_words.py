@@ -35,18 +35,6 @@ for word in final:
 
         soloNumeros[word[1]] = mayor - float(word[3])
 
-        # print(f"{word[1]}: {soloNumeros[word[1]]}")
-        # print(word[3] in soloNumeros.values())
-
-""" ordenado = []
-
-for word in soloNumeros.keys():
-    if word in dct:
-        ordenado.append(word)
-
-        pass
-    pass """
-
 for word in dct:
     if word not in soloNumeros.keys():
         soloNumeros[word] = mayor

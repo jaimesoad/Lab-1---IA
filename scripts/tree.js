@@ -141,28 +141,20 @@ class Tree {
     }
 
     RenderTree() {
-
         let DataSet = []
         var NodesData = this.raiz.Data_Pre_Orden(DataSet)
-
         nodes = new vis.DataSet(NodesData)
-
+        
         DataSet = []
         var EdgesData = this.raiz.Edges_Pre_Orden(DataSet)
-
         edges = new vis.DataSet(EdgesData)
 
-        // create a network
         var container = document.getElementById('mynetwork');
 
-        // provide the data in the vis format
         DATA = {
             nodes: nodes,
             edges: edges
         };
-
-        // initialize your network!
-        // var network = new vis.Network(container, data, options);
 
         const options = {
             nodes: {
@@ -297,9 +289,7 @@ class Tree {
                 },
             }
         }
-
         network = new vis.Network(container, DATA, options);
-
         network.setOptions(options);
     }
 }
